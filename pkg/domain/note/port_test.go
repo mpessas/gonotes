@@ -1,7 +1,8 @@
-package domain
+package note
 
 import (
 	"github.com/GoWebProd/uuid7"
+	"resources/pkg/domain"
 	"testing"
 )
 
@@ -28,7 +29,7 @@ func TestCreateNotePort(t *testing.T) {
 			r := MemNoteRepository{}
 
 			ans := CreateNotePort(&r, tt.input[0], tt.input[1])
-			if ans.Body != tt.want[0] || ans.Author != Author(tt.want[1]) {
+			if ans.Body != tt.want[0] || ans.Author != domain.Author(tt.want[1]) {
 				t.Errorf("got %s, want %s", *ans, tt.want)
 			}
 			if _, err := uuid7.Parse(ans.Id.StringUUID()); err != nil {
