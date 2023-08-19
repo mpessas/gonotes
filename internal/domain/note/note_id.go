@@ -1,6 +1,6 @@
 package note
 
-import "resources/pkg/domain/libs"
+import "resources/internal/domain/libs"
 
 type NoteId string
 
