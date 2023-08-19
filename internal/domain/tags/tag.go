@@ -6,12 +6,12 @@ import (
 	"strings"
 )
 
-type TagKey string
+type TagKey uint8
 
 const (
-	Undefined TagKey = "undefined"
-	ClientId  TagKey = "client_id"
-	Carrier   TagKey = "carrier"
+	Undefined TagKey = iota
+	ClientId
+	Carrier
 )
 
 var keyValue = map[string]TagKey{
@@ -22,11 +22,11 @@ var keyValue = map[string]TagKey{
 func (k TagKey) String() string {
 	switch k {
 	case ClientId:
-		return "ClientId"
+		return "client_id"
 	case Carrier:
-		return "Carrier"
+		return "carrier"
 	}
-	return "Undefined"
+	return "unknown"
 }
 
 func parseKey(s string) (TagKey, error) {
@@ -38,8 +38,14 @@ func parseKey(s string) (TagKey, error) {
 	return value, nil
 }
 
-func (k TagKey) MarshalJSON() ([]byte, error) {
-	return json.Marshal(k.String())
+// MarshalText is enough.
+//
+// func (k TagKey) MarshalJSON() ([]byte, error) {
+// 	return json.Marshal(k.String())
+// }
+
+func (k TagKey) MarshalText() ([]byte, error) {
+	return []byte(k.String()), nil
 }
 
 func (k *TagKey) UnmarshalJSON(data []byte) error {
@@ -49,6 +55,14 @@ func (k *TagKey) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	if *k, err = parseKey(key); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (k *TagKey) UnmarshalText(text []byte) error {
+	var err error
+	if *k, err = parseKey(string(text)); err != nil {
 		return err
 	}
 	return nil

@@ -46,7 +46,7 @@ func (r *MemNoteRepository) Search(tags map[tags.TagKey]string) []note.Note {
 type CreateNotePayload struct {
 	Body   string                 `json:"body" binding:"required"`
 	Author string                 `json:"author" binding:"required,email"`
-	Tags   map[tags.TagKey]string `json:"tags"`
+	Tags   map[tags.TagKey]string `json:"tags" validate:"-"`
 }
 
 func createNote(c *gin.Context) {
