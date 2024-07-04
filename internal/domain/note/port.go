@@ -1,6 +1,8 @@
 package note
 
-import "resources/internal/domain/tags"
+import (
+	"resources/internal/domain/tags"
+)
 
 func CreateNotePort(r NoteRepository, body, author_s string, tags map[tags.TagKey]string) *Note {
 	author := NewAuthor(author_s)

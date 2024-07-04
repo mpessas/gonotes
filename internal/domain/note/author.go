@@ -1,6 +1,8 @@
 package note
 
-import "strings"
+import (
+	"strings"
+)
 
 type Author string
 

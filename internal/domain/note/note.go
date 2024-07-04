@@ -1,6 +1,8 @@
 package note
 
-import "resources/internal/domain/tags"
+import (
+	"resources/internal/domain/tags"
+)
 
 type Note struct {
 	Id     NoteId                 `json:"id"`
